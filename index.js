@@ -14,4 +14,9 @@ if (window.DeviceOrientationEvent) {
       <p>Front to Back: ${frontToBack}</p>
     `;
   });
+} else {
+  console.log("Device Orientation API not supported");
+  document.getElementById("test-section").innerHTML = `
+        <p>Device Orientation API not supported</p>
+    `;
 }
