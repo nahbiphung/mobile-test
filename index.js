@@ -22,8 +22,8 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
 
               // const x = e.offsetX;
               // const y = e.offsetY;
-              const x = e.leftToRight;
-              const y = e.frontToBack;
+              const x = leftToRight;
+              const y = frontToBack;
               const { width, height } = cardWrapper.getBoundingClientRect();
               const halfWidth = width / 2;
               const halfHeight = height / 2;

@@ -27,7 +27,7 @@ section {
   align-items: flex-end;
   justify-content: flex-end;
   font-size: 1.6rem;
-  font-family: poppins;
+  font-family: poppins, Arial, Helvetica, sans-serif;
   background-color: royalblue;
   color: white;
   position: relative;
