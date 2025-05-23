@@ -33,8 +33,8 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
                 width;
 
               // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
-              const minBeta = -90;
-              const maxBeta = 90;
+              const minBeta = -180;
+              const maxBeta = 180;
               const frontToBackClamped = Math.max(
                 minBeta,
                 Math.min(maxBeta, frontToBack)
