@@ -7,15 +7,10 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
           window.addEventListener(
             "deviceorientation",
             (event) => {
-              const rotateDegrees = event.alpha; // alpha: rotation around z-axis
               const leftToRight = event.gamma; // gamma: left to right
               const frontToBack = event.beta; // beta: front back
-              console.log(
-                `Rotation: ${rotateDegrees}, Left to Right: ${leftToRight}, Front to Back: ${frontToBack}`
-              );
 
               document.getElementById("test-section").innerHTML = `
-                  <p>Rotation: ${rotateDegrees}</p>
                   <p>Left to Right: ${leftToRight}</p>
                   <p>Front to Back: ${frontToBack}</p>
               `;
@@ -33,8 +28,8 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
                 width;
 
               // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
-              const minBeta = -180;
-              const maxBeta = 180;
+              const minBeta = -90;
+              const maxBeta = 90;
               const frontToBackClamped = Math.max(
                 minBeta,
                 Math.min(maxBeta, frontToBack)
