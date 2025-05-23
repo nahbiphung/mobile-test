@@ -50,6 +50,8 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
               const rotationX = ((offsetY - halfHeight) / halfHeight) * mostY;
 
               document.getElementById("position-x-y").innerHTML = `
+                  <p>offsetX: ${offsetX}</p>
+                  <p>offsetY: ${offsetY}</p>
                   <p>rotationX: ${rotationX}</p>
                   <p>rotationY: ${rotationY}</p>
               `;
@@ -104,6 +106,8 @@ cardWrapper.addEventListener("mousemove", (e) => {
   console.log([rotationX, rotationY]);
 
   document.getElementById("position-x-y").innerHTML = `
+    <p>e.offsetX: ${e.offsetX}</p>
+    <p>e.offsetY: ${e.offsetY}</p>
     <p>rotationX: ${rotationX}</p>
     <p>rotationY: ${rotationY}</p>
   `;
