@@ -75,53 +75,62 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
 }
 
 if (window.DeviceOrientationEvent) {
-  addEventListener("deviceorientation", (event) => {
-    const leftToRight = event.gamma; // gamma: left to right
-    const frontToBack = event.beta; // beta: front back
+  addEventListener(
+    "deviceorientation",
+    (event) => {
+      const leftToRight = event.gamma; // gamma: left to right
+      const frontToBack = event.beta; // beta: front back
 
-    const { width, height } = cardWrapper.getBoundingClientRect();
-    // Map gamma (-90 to 90) to offsetX (0 to width)
-    const minGamma = -5;
-    const maxGamma = 5;
-    const leftToRightClamped = Math.max(
-      minGamma,
-      Math.min(maxGamma, leftToRight)
-    );
-    const offsetX =
-      ((leftToRightClamped - minGamma) / (maxGamma - minGamma)) * width;
+      document.getElementById("test-section").innerHTML = `
+                  <p>Left to Right: ${leftToRight}</p>
+                  <p>Front to Back: ${frontToBack}</p>
+              `;
 
-    // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
-    const minBeta = 25;
-    const maxBeta = 50;
-    const frontToBackClamped = Math.max(
-      minBeta,
-      Math.min(maxBeta, frontToBack)
-    );
-    const offsetY =
-      ((frontToBackClamped - minBeta) / (maxBeta - minBeta)) * height;
+      const { width, height } = cardWrapper.getBoundingClientRect();
+      // Map gamma (-90 to 90) to offsetX (0 to width)
+      const minGamma = -5;
+      const maxGamma = 5;
+      const leftToRightClamped = Math.max(
+        minGamma,
+        Math.min(maxGamma, leftToRight)
+      );
+      const offsetX =
+        ((leftToRightClamped - minGamma) / (maxGamma - minGamma)) * width;
 
-    const halfWidth = width / 2;
-    const halfHeight = height / 2;
+      // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
+      const minBeta = 25;
+      const maxBeta = 50;
+      const frontToBackClamped = Math.max(
+        minBeta,
+        Math.min(maxBeta, frontToBack)
+      );
+      const offsetY =
+        ((frontToBackClamped - minBeta) / (maxBeta - minBeta)) * height;
 
-    // calculate angle
-    const rotationY = ((offsetX - halfWidth) / halfWidth) * mostX;
-    const rotationX = ((offsetY - halfHeight) / halfHeight) * mostY;
+      const halfWidth = width / 2;
+      const halfHeight = height / 2;
 
-    document.getElementById("position-x-y").innerHTML = `
+      // calculate angle
+      const rotationY = ((offsetX - halfWidth) / halfWidth) * mostX;
+      const rotationX = ((offsetY - halfHeight) / halfHeight) * mostY;
+
+      document.getElementById("position-x-y").innerHTML = `
                   <p>offsetX: ${offsetX}</p>
                   <p>offsetY: ${offsetY}</p>
                   <p>rotationX: ${rotationX}</p>
                   <p>rotationY: ${rotationY}</p>
               `;
 
-    // set rotation
-    card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-    highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
-    highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+      // set rotation
+      card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+      highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+      highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
 
-    dot.style.left = `${offsetX}px`;
-    dot.style.top = `${offsetY}px`;
-  });
+      dot.style.left = `${offsetX}px`;
+      dot.style.top = `${offsetY}px`;
+    },
+    true
+  );
 } else {
   console.log("Device Orientation API not supported");
   document.getElementById("test-section").innerHTML = `
