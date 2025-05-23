@@ -20,17 +20,20 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
                   <p>Front to Back: ${frontToBack}</p>
               `;
 
-              // const x = e.offsetX;
-              // const y = e.offsetY;
-              const x = leftToRight;
-              const y = frontToBack;
-              const { width, height } = cardWrapper.getBoundingClientRect();
-              const halfWidth = width / 2;
-              const halfHeight = height / 2;
+              const maxGamma = 45; // max left-right tilt (gamma) in degrees
+              const maxBeta = 45; // max front-back tilt (beta) in degrees
 
-              // calculate angle
-              const rotationY = ((x - halfWidth) / halfWidth) * mostX;
-              const rotationX = ((y - halfHeight) / halfHeight) * mostY;
+              // inside deviceorientation event listener:
+              const x = leftToRight; // gamma: -90 (left) to 90 (right)
+              const y = frontToBack; // beta: -180 (up) to 180 (down)
+
+              // Clamp values to max ranges for smoother effect
+              const clampedGamma = Math.max(-maxGamma, Math.min(maxGamma, x));
+              const clampedBeta = Math.max(-maxBeta, Math.min(maxBeta, y));
+
+              // Map gamma/beta to rotation range
+              const rotationY = (clampedGamma / maxGamma) * mostX;
+              const rotationX = (clampedBeta / maxBeta) * mostY;
 
               // set rotation
               card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
@@ -87,6 +90,8 @@ cardWrapper.addEventListener("mousemove", (e) => {
   // remove transition
   card.style.transition = "none";
   highlight.style.transition = "none";
+
+  console.log([e.offsetX, e.offsetY]);
 
   const x = e.offsetX;
   const y = e.offsetY;
