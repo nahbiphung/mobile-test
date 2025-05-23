@@ -103,6 +103,11 @@ cardWrapper.addEventListener("mousemove", (e) => {
 
   console.log([rotationX, rotationY]);
 
+  document.getElementById("position-x-y").innerHTML = `
+    <p>rotationX: ${rotationX}</p>
+    <p>rotationY: ${rotationY}</p>
+  `;
+
   // set rotation
   card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
   highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
