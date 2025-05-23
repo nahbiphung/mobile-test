@@ -20,20 +20,39 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
                   <p>Front to Back: ${frontToBack}</p>
               `;
 
-              const maxGamma = 45; // max left-right tilt (gamma) in degrees
-              const maxBeta = 45; // max front-back tilt (beta) in degrees
+              const { width, height } = cardWrapper.getBoundingClientRect();
+              // Map gamma (-90 to 90) to offsetX (0 to width)
+              const minGamma = -90;
+              const maxGamma = 90;
+              const leftToRightClamped = Math.max(
+                minGamma,
+                Math.min(maxGamma, leftToRight)
+              );
+              const offsetX =
+                ((leftToRightClamped - minGamma) / (maxGamma - minGamma)) *
+                width;
 
-              // inside deviceorientation event listener:
-              const x = leftToRight; // gamma: -90 (left) to 90 (right)
-              const y = frontToBack; // beta: -180 (up) to 180 (down)
+              // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
+              const minBeta = -90;
+              const maxBeta = 90;
+              const frontToBackClamped = Math.max(
+                minBeta,
+                Math.min(maxBeta, frontToBack)
+              );
+              const offsetY =
+                ((frontToBackClamped - minBeta) / (maxBeta - minBeta)) * height;
 
-              // Clamp values to max ranges for smoother effect
-              const clampedGamma = Math.max(-maxGamma, Math.min(maxGamma, x));
-              const clampedBeta = Math.max(-maxBeta, Math.min(maxBeta, y));
+              const halfWidth = width / 2;
+              const halfHeight = height / 2;
 
-              // Map gamma/beta to rotation range
-              const rotationY = (clampedGamma / maxGamma) * mostX;
-              const rotationX = (clampedBeta / maxBeta) * mostY;
+              // calculate angle
+              const rotationY = ((offsetX - halfWidth) / halfWidth) * mostX;
+              const rotationX = ((offsetY - halfHeight) / halfHeight) * mostY;
+
+              document.getElementById("position-x-y").innerHTML = `
+                  <p>rotationX: ${rotationX}</p>
+                  <p>rotationY: ${rotationY}</p>
+              `;
 
               // set rotation
               card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
@@ -54,28 +73,7 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
       });
   });
 }
-// if (window.DeviceOrientationEvent) {
-//   addEventListener("deviceorientation", (event) => {
-//     const rotateDegrees = event.alpha; // alpha: rotation around z-axis
-//     const leftToRight = event.gamma; // gamma: left to right
-//     const frontToBack = event.beta; // beta: front back
 
-//     console.log(
-//       `Rotation: ${rotateDegrees}, Left to Right: ${leftToRight}, Front to Back: ${frontToBack}`
-//     );
-
-//     document.getElementById("test-section").innerHTML = `
-//       <p>Rotation: ${rotateDegrees}</p>
-//       <p>Left to Right: ${leftToRight}</p>
-//       <p>Front to Back: ${frontToBack}</p>
-//     `;
-//   });
-// } else {
-//   console.log("Device Orientation API not supported");
-//   document.getElementById("test-section").innerHTML = `
-//         <p>Device Orientation API not supported</p>
-//     `;
-// }
 // ================ Card Animation ================
 // DOM Element selections
 const cardWrapper = document.querySelector(".cardWrapper");
@@ -91,7 +89,7 @@ cardWrapper.addEventListener("mousemove", (e) => {
   card.style.transition = "none";
   highlight.style.transition = "none";
 
-  console.log([e.offsetX, e.offsetY]);
+  // console.log([e.offsetX, e.offsetY]);
 
   const x = e.offsetX;
   const y = e.offsetY;
@@ -102,6 +100,8 @@ cardWrapper.addEventListener("mousemove", (e) => {
   // calculate angle
   const rotationY = ((x - halfWidth) / halfWidth) * mostX;
   const rotationX = ((y - halfHeight) / halfHeight) * mostY;
+
+  console.log([rotationX, rotationY]);
 
   // set rotation
   card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
