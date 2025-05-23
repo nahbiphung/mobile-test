@@ -147,7 +147,7 @@ const dot = document.querySelector(".dot");
 
 // highest values for angle
 const mostX = 10; // 10 or -10
-const mostY = 10; // 10 or -10
+const mostY = -10; // 10 or -10
 
 cardWrapper.addEventListener("mousemove", (e) => {
   // remove transition
