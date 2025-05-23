@@ -17,8 +17,8 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
 
               const { width, height } = cardWrapper.getBoundingClientRect();
               // Map gamma (-90 to 90) to offsetX (0 to width)
-              const minGamma = -1;
-              const maxGamma = 1;
+              const minGamma = -3;
+              const maxGamma = 3;
               const leftToRightClamped = Math.max(
                 minGamma,
                 Math.min(maxGamma, leftToRight)
@@ -29,7 +29,7 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
 
               // Map beta (-90 to 90, or -180 to 180 depending on device) to offsetY (0 to height)
               const minBeta = 5;
-              const maxBeta = 50;
+              const maxBeta = 60;
               const frontToBackClamped = Math.max(
                 minBeta,
                 Math.min(maxBeta, frontToBack)
