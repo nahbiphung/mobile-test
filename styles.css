@@ -48,3 +48,13 @@ section {
   left: 16%;
   right: 10%;
 }
+
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  left: 49%;
+  top: 50%;
+  background-color: red;
+}

@@ -52,9 +52,12 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
               `;
 
               // set rotation
-              card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-              highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
-              highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+              // card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+              // highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+              // highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+
+              dot.style.left = `${offsetX}px`;
+              dot.style.top = `${offsetY}px`;
             },
             true
           );
@@ -76,6 +79,7 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
 const cardWrapper = document.querySelector(".cardWrapper");
 const card = document.querySelector(".card");
 const highlight = document.querySelector(".highlight");
+const dot = document.querySelector(".dot");
 
 // highest values for angle
 const mostX = 10; // 10 or -10
@@ -109,8 +113,11 @@ cardWrapper.addEventListener("mousemove", (e) => {
 
   // set rotation
   card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-  highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
-  highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+  // highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+  // highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+
+  dot.style.left = `${x}px`;
+  dot.style.top = `${y}px`;
 });
 
 cardWrapper.addEventListener("mouseleave", () => {
@@ -122,4 +129,8 @@ cardWrapper.addEventListener("mouseleave", () => {
   // add default position back to highlight
   highlight.style.left = `16%`;
   highlight.style.top = `10%`;
+
+  const { width, height } = cardWrapper.getBoundingClientRect();
+  dot.style.left = `${width / 2}px`;
+  dot.style.top = `${height / 2}px`;
 });
