@@ -15,10 +15,27 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
               );
 
               document.getElementById("test-section").innerHTML = `
-      <p>Rotation: ${rotateDegrees}</p>
-      <p>Left to Right: ${leftToRight}</p>
-      <p>Front to Back: ${frontToBack}</p>
-    `;
+                  <p>Rotation: ${rotateDegrees}</p>
+                  <p>Left to Right: ${leftToRight}</p>
+                  <p>Front to Back: ${frontToBack}</p>
+              `;
+
+              // const x = e.offsetX;
+              // const y = e.offsetY;
+              const x = e.leftToRight;
+              const y = e.frontToBack;
+              const { width, height } = cardWrapper.getBoundingClientRect();
+              const halfWidth = width / 2;
+              const halfHeight = height / 2;
+
+              // calculate angle
+              const rotationY = ((x - halfWidth) / halfWidth) * mostX;
+              const rotationX = ((y - halfHeight) / halfHeight) * mostY;
+
+              // set rotation
+              card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+              highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+              highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
             },
             true
           );
