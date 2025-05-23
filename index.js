@@ -52,9 +52,9 @@ if (typeof DeviceOrientationEvent.requestPermission === "function") {
               `;
 
               // set rotation
-              // card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-              // highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
-              // highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+              card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
+              highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+              highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
 
               dot.style.left = `${offsetX}px`;
               dot.style.top = `${offsetY}px`;
@@ -113,8 +113,8 @@ cardWrapper.addEventListener("mousemove", (e) => {
 
   // set rotation
   card.style.transform = `rotateY(${rotationY}deg) rotateX(${rotationX}deg)`;
-  // highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
-  // highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
+  highlight.style.left = `${(rotationY / mostX) * 60 * -1}%`;
+  highlight.style.top = `${(rotationX / mostY) * 60 * -1}%`;
 
   dot.style.left = `${x}px`;
   dot.style.top = `${y}px`;
